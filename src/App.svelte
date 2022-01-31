@@ -30,7 +30,7 @@
   };
 
 	const getRandomInstagramPic = () => {
-		fetch("https://api.allorigins.win/get?url=https://www.instagram.com/marcopulesh/")
+		fetch("https://www.instagram.com/marcopulesh/?__a=1")
 		.then(response => {
 			if (response.ok) {
 				return response.json()
@@ -40,8 +40,9 @@
 		})
 		.then(data => {
 			let contents = data.contents
-			var doc = new DOMParser().parseFromString(data.contents, "text/html");
-			console.log(doc.querySelector('body'))
+			console.log(contents)
+			// var doc = new DOMParser().parseFromString(data.contents, "text/xml");
+			// console.log(contents.querySelector('body'))
 		})
 	}
 
