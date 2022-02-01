@@ -1,66 +1,74 @@
 <script>
   import { onMount } from "svelte";
-  import axios from "axios";
-
-  // export let name;
   let tattoo_machine = "/img/tattoo_machine.png";
-  const instagramRegExp = new RegExp(
-    /<script type="text\/javascript">window\._sharedData = (.*)<\/script>/
-  );
+  let instagram_icon = "/img/icons8-instagram.png";
+  let tattoos_src = [];
+  let src1 = "";
+  let src2 = "";
 
-  const fetchInstagramPhotos = async (accountUrl) => {
-		console.log(accountUrl)
-    console.log(axios);
-    const response = await axios.get(accountUrl);
-    const json = JSON.parse(response.data.match(instagramRegExp)[1]);
-    const edges =
-      json.entry_data.ProfilePage[0].graphql.user.edge_owner_to_timeline_media.edges.splice(
-        0,
-        8
-      );
-    const photos = edges.map(({ node }) => {
-      return {
-        url: `https://www.instagram.com/p/${node.shortcode}/`,
-        thumbnailUrl: node.thumbnail_src,
-        displayUrl: node.display_url,
-        caption: node.edge_media_to_caption.edges[0].node.text,
-      };
-    });
-    return photos;
+  function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  const setRandomImage = (images) => {
+    let random1 = randomIntFromInterval(1, 9);
+    let random2 = randomIntFromInterval(1, 9);
+    if (src1 === random1 && random1 !== 1) {
+      random1 = random1 - 1;
+    } else {
+      random1 = random1 + 1;
+    }
+
+    if (src2 === random2 && random2 !== 1) {
+      random2 = random2 - 1;
+    } else {
+      random2 = random2 + 1;
+    }
+    src1 = "/img/tattoos/pic" + randomIntFromInterval(1, 9) + ".jpg";
+    src2 = "/img/tattoos/pic" + randomIntFromInterval(1, 9) + ".jpg";
   };
 
-	const getRandomInstagramPic = () => {
-		fetch("https://www.instagram.com/marcopulesh/?__a=1")
-		.then(response => {
-			if (response.ok) {
-				return response.json()
-				// return response.json()
-			}
-			console.log(response)
-		})
-		.then(data => {
-			let contents = data.contents
-			console.log(contents)
-			// var doc = new DOMParser().parseFromString(data.contents, "text/xml");
-			// console.log(contents.querySelector('body'))
-		})
-	}
+  const revealImage = (image) => {
+    image.classList.remove("hide");
+    setTimeout(() => {
+      image.classList.add("hide");
+    }, 4000);
+  };
+
+  for (let i = 1; i < 10; i++) {
+    tattoos_src.push("/img/tattoos/pic" + i + ".jpg");
+  }
 
   onMount(() => {
-    // fetchInstagramPhotos("https://www.instagram.com/marcopulesh/");
-		getRandomInstagramPic()
+    let images = document.querySelectorAll(".img");
+    setInterval(() => {
+      setRandomImage(images);
+      revealImage(images[randomIntFromInterval(0, 1)]);
+    }, 5000);
   });
 </script>
 
 <main>
   <div class="container">
     <h1>Marco Di Sotto</h1>
-    <p>Tattoo Artist</p>
+    <p>TATTOO ARTIST</p>
     <img class="tattoo_machine" src={tattoo_machine} alt="A tattoo machine." />
+
+    <span
+      class="instagram"
+      on:click={() => {
+        window.open("https://www.instagram.com/marcopulesh/");
+      }}
+      style="background-image:url({instagram_icon})"
+    />
+  </div>
+  <div class="wall-background">
+    <div class="img hide" style="background-image: url({src1});" />
+    <div class="img hide" style="background-image: url({src2});" />
   </div>
 </main>
 
-<style>
+<style lang="scss">
   main {
     text-align: center;
     max-width: 240px;
@@ -72,7 +80,55 @@
     height: 100vh;
   }
 
+  .wall-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    justify-content: space-between;
+    align-content: center;
+    z-index: 5;
+
+    .img {
+      width: 35em;
+      height: 35em;
+      background-position: center;
+      opacity: 1;
+      transition: opacity 0.5s linear;
+      box-shadow: 0 0px 53px 67px #fff inset;
+      background-repeat: no-repeat;
+      background-size: contain;
+
+      @media screen and (max-width: 1123px) {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      &.hide {
+        opacity: 0;
+        transition: opacity 0.5s linear;
+      }
+    }
+  }
   .container {
+    position: relative;
+    z-index: 999;
+    text-shadow: 0px 0px 15px white;
+  }
+
+  .instagram {
+    cursor: pointer;
+    display: block;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto;
+    z-index: 999999;
     position: relative;
   }
 
