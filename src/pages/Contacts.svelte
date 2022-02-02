@@ -1,7 +1,7 @@
 <div class="page-container">
   <h1>Contacts</h1>
 
-  <form class="contact-form" name="contact" method="POST" netlify>
+  <form class="contact-form" name="contact" method="POST" data-netlify="true">
     <p>
       <label>Your Name: <input type="text" name="name" /></label>
     </p>
@@ -15,7 +15,6 @@
       <button type="submit">SEND</button>
     </p>
   </form>
-  <input type="hidden" name="form-name" value="contact">
 </div>
 
 <style lang="scss">
