@@ -1,28 +1,30 @@
 <script>
   import { onMount } from "svelte";
 
-  // Show mobile icon and display menu
   let showMobileMenu = false;
   let logo = "/img/tattoo.png";
 
-  // List of navigation items
   const navItems = [
     { label: "ABOUT ME", href: "about" },
     { label: "GET IN TOUCH", href: "contacts" },
   ];
 
-  // Mobile menu click event handler
-  const handleMobileIconClick = () => (showMobileMenu = !showMobileMenu);
+  const handleMobileIconClick = () => {
+    const mediaListener = window.matchMedia("(max-width: 767px)");
 
-  // Media match query handler
+    if (!mediaListener.matches) {
+      return
+    }
+
+    return (showMobileMenu = !showMobileMenu);
+  };
+
   const mediaQueryHandler = (e) => {
-    // Reset mobile state
     if (!e.matches) {
       showMobileMenu = false;
     }
   };
 
-  // Attach media query listener on mount hook
   onMount(() => {
     const mediaListener = window.matchMedia("(max-width: 767px)");
 
@@ -40,9 +42,11 @@
       <div class="middle-line" />
     </div>
     <ul class={`navbar-list${showMobileMenu ? " mobile" : ""}`}>
-      <li class="home"><a href="/">HOME</a></li>
+      <li on:click={handleMobileIconClick} class="home">
+        <a href="/">HOME</a>
+      </li>
       {#each navItems as item}
-        <li>
+        <li on:click={handleMobileIconClick}>
           <a href={item.href}>{item.label}</a>
         </li>
       {/each}

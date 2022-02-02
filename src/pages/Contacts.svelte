@@ -35,7 +35,7 @@
         align-items: center;
       }
       button {
-        color: red;
+        color: #ff3e00;
         background-color: transparent;
         outline: none;
         border: none;
@@ -44,7 +44,7 @@
         cursor: pointer;
 
         &:hover {
-          border: 1px solid red;
+          border: 1px solid #ff3e00;
           border-radius: 5px;
         }
       }
