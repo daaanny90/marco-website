@@ -92,6 +92,7 @@
     justify-content: space-between;
     align-content: center;
     z-index: 5;
+    opacity: .3;
 
     .img {
       width: 35em;
