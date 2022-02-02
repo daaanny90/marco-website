@@ -1,9 +1,9 @@
-
 <script>
   import { onMount } from "svelte";
 
   // Show mobile icon and display menu
   let showMobileMenu = false;
+  let logo = "/img/tattoo.png";
 
   // List of navigation items
   const navItems = [
@@ -15,7 +15,7 @@
   const handleMobileIconClick = () => (showMobileMenu = !showMobileMenu);
 
   // Media match query handler
-  const mediaQueryHandler = e => {
+  const mediaQueryHandler = (e) => {
     // Reset mobile state
     if (!e.matches) {
       showMobileMenu = false;
@@ -32,10 +32,15 @@
 
 <nav>
   <div class="inner">
-    <div on:click={handleMobileIconClick} class={`mobile-icon${showMobileMenu ? ' active' : ''}`}>
-      <div class="middle-line"></div>
+    <span class="logo" style="background-image:url({logo})" />
+    <div
+      on:click={handleMobileIconClick}
+      class={`mobile-icon${showMobileMenu ? " active" : ""}`}
+    >
+      <div class="middle-line" />
     </div>
-    <ul class={`navbar-list${showMobileMenu ? ' mobile' : ''}`}>
+    <ul class={`navbar-list${showMobileMenu ? " mobile" : ""}`}>
+      <li class="home"><a href="#">HOME</a></li>
       {#each navItems as item}
         <li>
           <a href={item.href}>{item.label}</a>
@@ -45,7 +50,30 @@
   </div>
 </nav>
 
-<style>
+<style lang="scss">
+  .logo {
+    width: 3em;
+    height: 3em;
+    background-position: center;
+    background-size: contain;
+    justify-self: start;
+    display: none;
+    background-size: 80%;
+    background-repeat: no-repeat;
+    position: relative;
+    cursor: pointer;
+
+    &:after {
+      content: "MDS";
+      position: absolute;
+      right: -35px;
+      top: 25%;
+    }
+  }
+
+  .home {
+    display: block;
+  }
   nav {
     background-color: white;
     height: 45px;
@@ -54,7 +82,6 @@
   }
 
   .inner {
-    max-width: 980px;
     padding-left: 20px;
     padding-right: 20px;
     margin: auto;
@@ -160,6 +187,14 @@
 
   @media only screen and (min-width: 767px) {
     .mobile-icon {
+      display: none;
+    }
+
+    .logo {
+      display: block;
+    }
+
+    .home {
       display: none;
     }
 
