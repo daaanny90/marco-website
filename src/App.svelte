@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import Navbar from "./components/Navbar.svelte"
   let tattoo_machine = "/img/tattoo_machine.png";
   let instagram_icon = "/img/icons8-instagram.png";
   let tattoos_src = [];
@@ -48,6 +49,7 @@
   });
 </script>
 
+<Navbar />
 <main>
   <div class="container">
     <h1>Marco Di Sotto</h1>
@@ -78,6 +80,7 @@
     justify-content: center;
     flex-direction: column;
     height: 100vh;
+    margin-top: -45px;
   }
 
   .wall-background {
@@ -93,6 +96,7 @@
     align-content: center;
     z-index: 5;
     opacity: .3;
+    pointer-events: none;
 
     .img {
       width: 35em;
@@ -119,7 +123,7 @@
   }
   .container {
     position: relative;
-    z-index: 999;
+    z-index: 10;
     text-shadow: 0px 0px 15px white;
   }
 
