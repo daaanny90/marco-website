@@ -7,8 +7,8 @@
 
   // List of navigation items
   const navItems = [
-    { label: "ABOUT ME", href: "#" },
-    { label: "GET IN TOUCH", href: "#" },
+    { label: "ABOUT ME", href: "about" },
+    { label: "GET IN TOUCH", href: "contacts" },
   ];
 
   // Mobile menu click event handler
@@ -32,7 +32,7 @@
 
 <nav>
   <div class="inner">
-    <span class="logo" style="background-image:url({logo})" />
+    <a href="/"><span class="logo" style="background-image:url({logo})" /></a>
     <div
       on:click={handleMobileIconClick}
       class={`mobile-icon${showMobileMenu ? " active" : ""}`}
@@ -40,7 +40,7 @@
       <div class="middle-line" />
     </div>
     <ul class={`navbar-list${showMobileMenu ? " mobile" : ""}`}>
-      <li class="home"><a href="#">HOME</a></li>
+      <li class="home"><a href="/">HOME</a></li>
       {#each navItems as item}
         <li>
           <a href={item.href}>{item.label}</a>
@@ -68,6 +68,7 @@
       position: absolute;
       right: -35px;
       top: 25%;
+      color: #ff3e00;
     }
   }
 
