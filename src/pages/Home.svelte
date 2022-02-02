@@ -3,30 +3,23 @@
 
   let tattoo_machine = "/img/tattoo_machine.png";
   let instagram_icon = "/img/icons8-instagram.png";
-  let tattoos_src = [];
   let src1 = "";
   let src2 = "";
+  let randomPic1 = 0;
+  let randomPic2 = 0;
 
-  function randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+  function randomIntFromInterval(min, max, ref) {
+    let randomNumber = Math.floor(Math.random() * (max - min + 1) + min)
+    while (randomNumber===ref) {
+      randomNumber = Math.floor(Math.random() * (max - min + 1) + min)
+    }
+
+    return randomNumber
   }
 
-  const setRandomImage = (images) => {
-    let random1 = randomIntFromInterval(1, 9);
-    let random2 = randomIntFromInterval(1, 9);
-    if (src1 === random1 && random1 !== 1) {
-      random1 = random1 - 1;
-    } else {
-      random1 = random1 + 1;
-    }
-
-    if (src2 === random2 && random2 !== 1) {
-      random2 = random2 - 1;
-    } else {
-      random2 = random2 + 1;
-    }
-    src1 = "/img/tattoos/pic" + randomIntFromInterval(1, 9) + ".jpg";
-    src2 = "/img/tattoos/pic" + randomIntFromInterval(1, 9) + ".jpg";
+  const setRandomImage = (images) => {    
+    src1 = "/img/tattoos/pic" + randomIntFromInterval(1, 9, randomPic1) + ".jpg";
+    src2 = "/img/tattoos/pic" + randomIntFromInterval(1, 9, randomPic2) + ".jpg";
   };
 
   const revealImage = (image) => {
@@ -36,13 +29,11 @@
     }, 4000);
   };
 
-  for (let i = 1; i < 10; i++) {
-    tattoos_src.push("/img/tattoos/pic" + i + ".jpg");
-  }
-
   onMount(() => {
     let images = document.querySelectorAll(".img");
     setInterval(() => {
+      randomPic1 = randomIntFromInterval(1, 9, randomPic1)
+      randomPic2 = randomIntFromInterval(1, 9, randomPic2)
       setRandomImage(images);
       revealImage(images[randomIntFromInterval(0, 1)]);
     }, 5000);
