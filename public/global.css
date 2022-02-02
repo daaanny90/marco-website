@@ -40,6 +40,23 @@ input, button, select, textarea {
 	border-radius: 2px;
 }
 
+h1 {
+	color: #ff3e00;
+	text-transform: uppercase;
+	font-size: 2em;
+	font-weight: 100;
+}
+
+.page-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding-top: 5em;
+	max-width: 80%;
+	margin: auto;
+}
+
 input:disabled {
 	color: #ccc;
 }
